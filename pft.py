@@ -1,5 +1,7 @@
 import sys
-import json
+from redis import StrictRedis
+
+redis = StrictRedis('redis')
 
 pi_string = open('pi_hex_1b.txt', 'r').read().strip()
 
@@ -8,11 +10,10 @@ sending_file_path = '../../Desktop/Screenshot 2020-05-04 at 09.33.39.png'
 
 send_file = open(sending_file_path, 'rb').read().strip()
 hex_file = send_file.hex()
-pi_table = json.load(open('indexed_pi_table.json', 'r'))
 
 
 def sequence_in_pi(sequence):
-    first_char_indexes = pi_table[sequence[0]]
+    first_char_indexes = redis.lrange(sequence[0], 0, -1)
     length = len(sequence)
     for index in first_char_indexes:
         if sequence in pi_string[index:index+length+1]:
