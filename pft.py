@@ -13,7 +13,7 @@ hex_file = send_file.hex()
 
 
 def sequence_in_pi(sequence):
-    first_char_indexes = redis.lrange(sequence[0], 0, -1)
+    first_char_indexes = redis.smembers(sequence[0])
     length = len(sequence)
     for index in first_char_indexes:
         if sequence in pi_string[index:index+length+1]:
@@ -30,7 +30,7 @@ def find_biggest_chunk(hex_string):
     upper_bound = len(hex_string)
     pivot = upper_bound // 2
 
-    while pivot != lower_bound or pivot != lower_bound:
+    while pivot != lower_bound or pivot != upper_bound:
         index = sequence_in_pi(hex_string[:pivot])
         print(f'{lower_bound}, {pivot}, {upper_bound}')
         print(f'Index: {index}\n')
