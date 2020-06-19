@@ -3,4 +3,4 @@ WORKDIR /app
 COPY . .
 RUN pip install -U pip
 RUN pip install -r requirements.txt
-CMD sleep 3600
+CMD sleep 360000
