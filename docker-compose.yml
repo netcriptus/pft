@@ -8,4 +8,13 @@ services:
       - redis
 
   redis:
-    image: redis
+    image: redis:alpine
+    command:
+      - 'redis-server'
+      - '--loglevel ${REDIS_LOGLEVEL:-warning}'
+      - '--databases 2'
+      - '--maxmemory 100000mb'
+      - '--maxmemory-policy noeviction'
+      - '--save 60 5'
+    # volumes:
+    #   - redis:/data
